@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Fedichal - Gestión de Reservas Deportivas",
   description: "Panel de control interno para el administrador del complejo deportivo, con control de solapamiento de canchas y sincronización con Google Calendar.",
+  icons: {
+    icon: "/logo.jpg",
+  },
 };
 
 export default function RootLayout({
