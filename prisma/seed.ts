@@ -3,8 +3,13 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
 import "dotenv/config";
 
+let connectionString = process.env.DATABASE_URL;
+if (connectionString && connectionString.includes("?")) {
+  connectionString = connectionString.split("?")[0];
+}
+
 const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString,
   ssl: {
     rejectUnauthorized: false,
   },
