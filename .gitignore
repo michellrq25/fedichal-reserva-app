@@ -1,0 +1,67 @@
+# Dependencias
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Compilaciones y Salidas
+/.next/
+/out/
+/build/
+/dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# Pruebas y Cobertura
+/coverage
+
+# Archivos de Entorno (Secrets / Credenciales)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+*.pem
+*.key
+
+# Bases de Datos Locales
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Depuración y Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log
+
+# Configuraciones de Editores / IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Archivos de Agentes e IA (Específicos del entorno de desarrollo)
+.gemini/
+.agents/
+AGENTS.md
+CLAUDE.md
+
+# Vercel
+.vercel
+
+# Sistema Operativo
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini

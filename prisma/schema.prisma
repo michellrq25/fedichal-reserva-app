@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Court {
+  id           String         @id // e.g., "F7_1", "F9_A", etc.
+  name         String
+  type         String         // "F7", "F9", "F11"
+  overlaps     CourtOverlap[] @relation("CourtSource")
+  overlappedBy CourtOverlap[] @relation("CourtTarget")
+  reservations Reservation[]
+}
+
+model CourtOverlap {
+  courtId        String
+  overlapsWithId String
+
+  court        Court @relation("CourtSource", fields: [courtId], references: [id], onDelete: Cascade)
+  overlapsWith Court @relation("CourtTarget", fields: [overlapsWithId], references: [id], onDelete: Cascade)
+
+  @@id([courtId, overlapsWithId])
+}
+
+model Reservation {
+  id              String   @id @default(uuid())
+  clienteNombre   String
+  clienteTelefono String
+  canchaId        String
+  fecha           DateTime
+  horaInicio      String   // "HH:mm"
+  horaFin         String   // "HH:mm"
+  googleEventId   String?
+  creadoEn        DateTime @default(now())
+
+  court Court @relation(fields: [canchaId], references: [id], onDelete: Cascade)
+
+  @@index([fecha, canchaId])
+}
