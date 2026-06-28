@@ -331,7 +331,9 @@ export function ReservationDialog({
               disabled={isSubmitting || isDeleting}
             >
               <SelectTrigger id="horaFin" className="w-full bg-secondary/20 border-border/30 focus-visible:border-primary/60 rounded-xl px-4 py-2.5 text-sm font-semibold h-11">
-                <SelectValue />
+                <SelectValue>
+                  {horaFin === "24:00" ? "00:00" : horaFin}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent className="bg-popover border border-border/60 text-popover-foreground rounded-xl max-h-[220px]">
                 {END_TIMES.map((time) => (
