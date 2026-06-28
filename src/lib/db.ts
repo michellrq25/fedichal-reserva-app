@@ -10,7 +10,12 @@ function createPrismaClient() {
   if (!connectionString) {
     throw new Error("Neither DATABASE_URL nor POSTGRES_PRISMA_URL is defined in environment variables.");
   }
-  const pool = new pg.Pool({ connectionString });
+  const pool = new pg.Pool({
+    connectionString,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  });
   const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });
 }
