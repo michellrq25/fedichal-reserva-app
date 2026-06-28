@@ -57,13 +57,13 @@ const COURTS = [
 ];
 
 // Generate 30-min interval times from 16:00 to 23:30
-const START_TIMES = Array.from({ length: 15 }, (_, i) => {
+const START_TIMES = Array.from({ length: 16 }, (_, i) => {
   const h = Math.floor(i / 2) + 16;
   const m = i % 2 === 0 ? "00" : "30";
   return `${String(h).padStart(2, "0")}:${m}`;
 });
 
-const END_TIMES = Array.from({ length: 15 }, (_, i) => {
+const END_TIMES = Array.from({ length: 16 }, (_, i) => {
   const h = Math.floor((i + 1) / 2) + 16;
   const m = (i + 1) % 2 === 0 ? "00" : "30";
   return `${String(h).padStart(2, "0")}:${m}`;
@@ -128,9 +128,14 @@ export function ReservationDialog({
     setHoraInicio(val);
     if (val >= horaFin) {
       const [h, m] = val.split(":");
-      let endH = parseInt(h, 10) + 1;
-      if (endH > 23) endH = 23;
-      setHoraFin(`${String(endH).padStart(2, "0")}:${m}`);
+      const startH = parseInt(h, 10);
+      let endH = startH + 1;
+      let endM = m;
+      if (endH >= 24) {
+        endH = 24;
+        endM = "00";
+      }
+      setHoraFin(`${String(endH).padStart(2, "0")}:${endM}`);
     }
   };
 
@@ -331,7 +336,7 @@ export function ReservationDialog({
               <SelectContent className="bg-popover border border-border/60 text-popover-foreground rounded-xl max-h-[220px]">
                 {END_TIMES.map((time) => (
                   <SelectItem key={time} value={time} className="cursor-pointer text-xs font-semibold focus:bg-primary focus:text-primary-foreground rounded-lg py-2">
-                    {time}
+                    {time === "24:00" ? "00:00" : time}
                   </SelectItem>
                 ))}
               </SelectContent>

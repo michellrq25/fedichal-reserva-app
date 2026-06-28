@@ -151,7 +151,7 @@ export function CalendarGrid({ reservations, selectedDate, onRefresh }: Calendar
                       <div className="flex justify-between items-center mt-1.5 pt-1.5 border-t border-border/10">
                         <span className="text-[9px] font-mono font-bold bg-secondary/80 border border-border/40 px-1.5 py-0.5 rounded text-foreground shadow-sm flex items-center gap-1 shrink-0">
                           <Clock className="w-2.5 h-2.5 text-muted-foreground/60" />
-                          {directBooking.horaInicio} - {directBooking.horaFin}
+                          {directBooking.horaInicio} - {directBooking.horaFin === "24:00" ? "00:00" : directBooking.horaFin}
                         </span>
                         {directBooking.googleEventId ? (
                           <span className="w-5 h-5 text-[9px] bg-sky-500/10 text-sky-500 border border-sky-500/25 rounded-full font-extrabold flex items-center justify-center shrink-0 shadow-sm" title="Sincronizado con Google Calendar">
