@@ -6,9 +6,9 @@ import pg from "pg";
 const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined };
 
 function createPrismaClient() {
-  const connectionString = process.env.DATABASE_URL;
+  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL;
   if (!connectionString) {
-    throw new Error("DATABASE_URL is not defined in environment variables.");
+    throw new Error("Neither DATABASE_URL nor POSTGRES_PRISMA_URL is defined in environment variables.");
   }
   const pool = new pg.Pool({ connectionString });
   const adapter = new PrismaPg(pool);
