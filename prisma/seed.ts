@@ -4,16 +4,20 @@ import pg from "pg";
 import "dotenv/config";
 
 let connectionString = process.env.DATABASE_URL;
-if (connectionString && connectionString.includes("?")) {
+const isLocal = connectionString ? (connectionString.includes("localhost") || connectionString.includes("127.0.0.1")) : true;
+
+if (!isLocal && connectionString && connectionString.includes("?")) {
   connectionString = connectionString.split("?")[0];
 }
 
-const pool = new pg.Pool({
-  connectionString,
-  ssl: {
+const poolConfig: any = { connectionString };
+if (!isLocal) {
+  poolConfig.ssl = {
     rejectUnauthorized: false,
-  },
-});
+  };
+}
+
+const pool = new pg.Pool(poolConfig);
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 

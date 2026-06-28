@@ -10,15 +10,21 @@ function createPrismaClient() {
   if (!connectionString) {
     throw new Error("Neither DATABASE_URL nor POSTGRES_PRISMA_URL is defined in environment variables.");
   }
-  if (connectionString.includes("?")) {
+  
+  const isLocal = connectionString.includes("localhost") || connectionString.includes("127.0.0.1");
+  
+  if (!isLocal && connectionString.includes("?")) {
     connectionString = connectionString.split("?")[0];
   }
-  const pool = new pg.Pool({
-    connectionString,
-    ssl: {
+  
+  const poolConfig: any = { connectionString };
+  if (!isLocal) {
+    poolConfig.ssl = {
       rejectUnauthorized: false,
-    },
-  });
+    };
+  }
+  
+  const pool = new pg.Pool(poolConfig);
   const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });
 }
